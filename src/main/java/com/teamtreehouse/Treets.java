@@ -1,6 +1,10 @@
 package com.teamtreehouse;
 
+import twitter4j.*;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by gschool on 8/7/16.
@@ -34,5 +38,30 @@ public class Treets {
         }
 
         return treets;
+    }
+
+    public static Treet[] loadAndSaveRemote() {
+        Twitter twitter = TwitterFactory.getSingleton();
+        Query query = new Query("#treet");
+        query.setCount(100);
+        QueryResult result = null;
+        try {
+            result = twitter.search(query);
+        } catch (TwitterException e) {
+            System.out.println("Getting tweet failed");
+            e.printStackTrace();
+        }
+        List<Status> tweets = result.getTweets();
+        List<Treet> list = new ArrayList<>();
+        System.out.printf("%d tweets were retrieved %n", tweets.size());
+        System.out.println(tweets.get(0).getUser().getScreenName());
+        for (Status status : tweets) {
+            list.add( new Treet(status.getUser().getScreenName(),
+                                      status.getText(),
+                                      status.getCreatedAt()));
+        }
+        Treet[] returning = list.toArray(new Treet[list.size()]);
+        Treets.save(returning);
+        return returning;
     }
 }
