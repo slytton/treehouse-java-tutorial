@@ -42,7 +42,8 @@ public class Treets {
 
     public static Treet[] loadAndSaveRemote() {
         Twitter twitter = TwitterFactory.getSingleton();
-        Query query = new Query("#treet");
+        Query query = new Query();
+        query.setQuery("java ");
         query.setCount(100);
         QueryResult result = null;
         try {
@@ -54,7 +55,6 @@ public class Treets {
         List<Status> tweets = result.getTweets();
         List<Treet> list = new ArrayList<>();
         System.out.printf("%d tweets were retrieved %n", tweets.size());
-        System.out.println(tweets.get(0).getUser().getScreenName());
         for (Status status : tweets) {
             list.add( new Treet(status.getUser().getScreenName(),
                                       status.getText(),

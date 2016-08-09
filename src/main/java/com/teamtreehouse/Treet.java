@@ -22,15 +22,15 @@ public class Treet implements Comparable<Treet>, Serializable {
         mCreationDate = creationDate;
     }
 
-    public Date getmCreationDate() {
+    public Date getCreationDate() {
         return mCreationDate;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
-    public String getmAuthor() {
+    public String getAuthor() {
         return mAuthor;
     }
 
